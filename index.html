@@ -9,7 +9,8 @@
     <style>
         body {
             font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
-            background-color: #f0f4f8;
+            background-color: #382017;
+            color: #333;
         }
         .hidden {
             display: none;
@@ -20,40 +21,43 @@
             }
         }
         .card {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.1);
             border: none;
             border-radius: 15px;
             overflow: hidden;
         }
         .card-body {
-            background-color: #ffffff;
+            background-color: #e3f2fd;
+            padding: 30px;
+            border-radius: 2px;
         }
         .card-title {
             color: #2c3e50;
             font-weight: 600;
+            font-size: 30px;
         }
         .form-label {
             font-weight: 600;
             color: #34495e;
         }
         .btn-primary {
-            background-color: #3498db;
-            border-color: #3498db;
+            background-color: #6610f2;
+            border-color: #5bc0de;
             transition: all 0.3s ease;
         }
         .btn-primary:hover {
-            background-color: #2980b9;
-            border-color: #2980b9;
+            background-color: #31a4c3;
+            border-color: #31a4c3;
             transform: translateY(-2px);
         }
         .btn-secondary {
-            background-color: #95a5a6;
-            border-color: #95a5a6;
+            background-color: #bdc3c7;
+            border-color: #bdc3c7;
             transition: all 0.3s ease;
         }
         .btn-secondary:hover {
-            background-color: #7f8c8d;
-            border-color: #7f8c8d;
+            background-color: #95a5a6;
+            border-color: #95a5a6;
             transform: translateY(-2px);
         }
         .form-check-input:checked {
@@ -64,11 +68,23 @@
             border-color: #bdc3c7;
         }
         .form-select:focus {
-            border-color: #3498db;
-            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+            border-color: #5bc0de;
+            box-shadow: 0 0 0 0.25rem rgba(91, 192, 222, 0.25);
         }
         [lang="mr"] {
             font-family: 'Noto Sans Devanagari', sans-serif;
+        }
+        .form-check-label {
+            color: #555;
+        }
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .card-header h1 {
+            color: #333;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -77,13 +93,18 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card shadow-lg">
-                    <div class="card-body">
-                        <div class="text-end mb-3">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <img src="LOGO.png" alt="Company Logo" class="img-fluid" style="max-height: 50px;">
+                            <h1 class="h3 mb-0">YNK Group</h1>
                             <button class="btn btn-secondary" id="langSwitch">English</button>
                         </div>
+                    </div>
+                    <div class="card-body">
                         <h2 class="card-title text-center mb-4" id="formTitle" lang="mr">सर्वेक्षण फॉर्म</h2>
                         <form id="surveyForm">
-                            <div class="mb-3">
+                            <!-- Question 1 -->
+                            <div class="question" id="question1">
                                 <label class="form-label" id="q1Label" lang="mr">१. शॉप चा ताबा आपल्याकडे आला आहे का, आपल्याला मिळाला आहे का?</label>
                                 <div>
                                     <div class="form-check">
@@ -97,10 +118,11 @@
                                 </div>
                             </div>
 
-                            <div id="subQuestions1" class="hidden">
+                            <!-- Sub-Questions for Question 1 -->
+                            <div class="question hidden" id="subQuestions1">
                                 <div class="mb-3">
                                     <label class="form-label" id="sq1Label" lang="mr">१.१ किती दिवसामध्ये ताबा भेटणार आहे?</label>
-                                    <select class="form-select" id="sq1Select">
+                                    <select class="form-select" id="sq1Select" name="possessionTime">
                                         <option value="2-4" id="sq1o1">2-4 दिवस</option>
                                         <option value="week" id="sq1o2">आठवडा</option>
                                         <option value="month" id="sq1o3">महिना</option>
@@ -108,213 +130,210 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" id="sq2Label" lang="mr">१.२ पुन्हा फोन किती तारखेला करू?</label>
-                                    <div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="callBack" id="callDate" value="callDate">
-                                            <label class="form-check-label" for="callDate" id="sq2o1Label" lang="mr">या तारखेला फोने करा</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="callBack" id="callLater" value="callLater">
-                                            <label class="form-check-label" for="callLater" id="sq2o2Label" lang="mr">खाली झाल्यनंतर मी तुम्हाला फोन करतो</label>
-                                        </div>
+                                    <input type="date" class="form-control" id="sq2Input" name="callbackDate">
+                                </div>
+                            </div>
+
+                            <!-- Question 2 -->
+                            <div class="question hidden" id="question2">
+                                <label class="form-label" id="q2Label" lang="mr">२. शॉप पूर्णपणे मोकळे आहे का?</label>
+                                <div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion2" id="shopEmptyYes" value="yes">
+                                        <label class="form-check-label" for="shopEmptyYes" id="q2o1Label" lang="mr">हो मोकळे आहे</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion2" id="shopEmptyNo" value="no">
+                                        <label class="form-check-label" for="shopEmptyNo" id="q2o2Label" lang="mr">नाही खाली झाले अजून</label>
                                     </div>
                                 </div>
                             </div>
 
-                            <div id="mainQuestions234" class="hidden">
-                                <!-- Question 2 -->
+                            <!-- Sub-Questions for Question 2 (Yes) -->
+                            <div class="question hidden" id="subQuestions2Yes">
                                 <div class="mb-3">
-                                    <label class="form-label" id="q2Label" lang="mr">२. शॉप पूर्णपणे मोकळे आहे का?</label>
-                                    <div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="mainQuestion2" id="shopEmptyYes" value="yes">
-                                            <label class="form-check-label" for="shopEmptyYes" id="q2o1Label" lang="mr">हो मोकळे आहे</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="mainQuestion2" id="shopEmptyNo" value="no">
-                                            <label class="form-check-label" for="shopEmptyNo" id="q2o2Label" lang="mr">नाही खाली झाले अजून</label>
-                                        </div>
+                                    <label class="form-label" id="shopPhotoLabel" lang="mr">शॉप चा संपूर्ण फोटो पाठवा</label>
+                                    <input type="file" class="form-control" id="shopPhoto" name="shopPhoto" accept="image/*">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" id="shopVideoLabel" lang="mr">शॉप चा video पाठवा</label>
+                                    <input type="file" class="form-control" id="shopVideo" name="shopVideo" accept="video/*">
+                                </div>
+                            </div>
+
+                            <!-- Question 3 -->
+                            <div class="question hidden" id="question3">
+                                <label class="form-label" id="q3Label" lang="mr">३. शॉप चा shuttar किती फूट आहे?</label>
+                                <div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion3" id="shutter6ft" value="6ft">
+                                        <label class="form-check-label" for="shutter6ft" id="q3o1Label" lang="mr">6 ft</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion3" id="shutter8ft" value="8ft">
+                                        <label class="form-check-label" for="shutter8ft" id="q3o2Label" lang="mr">8 ft</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion3" id="shutter12ft" value="12ft">
+                                        <label class="form-check-label" for="shutter12ft" id="q3o3Label" lang="mr">12 ft</label>
                                     </div>
                                 </div>
+                                <div class="mb-3 mt-2">
+                                    <label class="form-label" id="q3InputLabel" lang="mr">अन्य (फूट मध्ये नमूद करा)</label>
+                                    <input type="number" class="form-control" id="q3Input" name="shutterSizeOther">
+                                </div>
+                            </div>
 
-                                <div id="shopEmptyYesQuestions" class="hidden">
-                                    <div class="mb-3">
-                                        <label class="form-label" id="shopPhotoLabel" lang="mr">२.१ शॉप चा संपूर्ण फोटो पाठवा</label>
-                                        <input type="file" class="form-control" id="shopPhoto" accept="image/*">
+                            <!-- Question 4 -->
+                            <div class="question hidden" id="question4">
+                                <label class="form-label" id="q4Label" lang="mr">४. शॉप मध्ये electrical supply आहे का?</label>
+                                <div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion4" id="electricalSupplyYes" value="yes">
+                                        <label class="form-check-label" for="electricalSupplyYes" id="q4o1Label" lang="mr">हो आहे</label>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" id="shopVideoLabel" lang="mr">२.२ शॉप चा video पाठवा</label>
-                                        <input type="file" class="form-control" id="shopVideo" accept="video/*">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion4" id="electricalSupplyNo" value="no">
+                                        <label class="form-check-label" for="electricalSupplyNo" id="q4o2Label" lang="mr">नाही आहे</label>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div id="shopEmptyNoQuestions" class="hidden">
-                                    <div class="mb-3">
-                                        <label class="form-label" id="sq3Label" lang="mr">२.१ कधी पर्यन खाली होणार आहे?</label>
-                                        <input type="text" class="form-control" id="sq3Input">
+                            <!-- Sub-Questions for Question 4 (Yes) -->
+                            <div class="question hidden" id="subQuestions4Yes">
+                                <div class="mb-3">
+                                    <label class="form-label" id="lightPhotoLabel" lang="mr">शॉप मध्ये light चालू असल्याचा फोटो पाठवा</label>
+                                    <input type="file" class="form-control" id="lightPhoto" name="lightPhoto" accept="image/*">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" id="meterBoxLabel" lang="mr">मीटर box चा फोटो पाठवा</label>
+                                    <input type="file" class="form-control" id="meterBoxPhoto" name="meterBoxPhoto" accept="image/*">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" id="mcbBoxLabel" lang="mr">MCB Box चा फोटो पाठवा</label>
+                                    <input type="file" class="form-control" id="mcbBoxPhoto" name="mcbBoxPhoto" accept="image/*">
+                                </div>
+                            </div>
+
+                            <!-- Sub-Questions for Question 4 (No) -->
+                            <div class="question hidden" id="subQuestions4No">
+                                <div class="mb-3">
+                                    <label class="form-label" id="sq7Label" lang="mr">४.१ कोण घेऊन देणार आहे?</label>
+                                    <select class="form-select" id="sq7Select" name="electricalSupplyProvider">
+                                        <option value="owner" id="sq7o1">शॉप owner</option>
+                                        <option value="franchisee" id="sq7o2">frenchisee धारक</option>
+                                        <option value="other" id="sq7o3">इतर</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Question 5 -->
+                            <div class="question hidden" id="question5">
+                                <label class="form-label" id="q5Label" lang="mr">५. शॉप मध्ये drinage कॅन्नेक्टी आहे का?</label>
+                                <div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion5" id="drainageYes" value="yes">
+                                        <label class="form-check-label" for="drainageYes" id="q5o1Label" lang="mr">हो आहे</label>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" id="sq4Label" lang="mr">२.२ कोण खाली करणार आहे?</label>
-                                        <select class="form-select" id="sq4Select">
-                                            <option value="owner" id="sq4o1">शॉप owner</option>
-                                            <option value="franchisee" id="sq4o2">frenchisee धारक</option>
-                                            <option value="other" id="sq4o3">इतर</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" id="sq5Label" lang="mr">२.३ किती दिवस लागतील खाली होण्यासाठी?</label>
-                                        <select class="form-select" id="sq5Select">
-                                            <option value="2-4" id="sq5o1">2-4 दिवस</option>
-                                            <option value="week" id="sq5o2">आठवडा</option>
-                                            <option value="month" id="sq5o3">महिना</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" id="sq6Label" lang="mr">२.४ पुन्हा फोने कधी करू?</label>
-                                        <div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="callBackShop" id="callDateShop" value="callDate">
-                                                <label class="form-check-label" for="callDateShop" id="sq6o1Label" lang="mr">
-                                                    <input type="date" class="form-control" id="callBackDateShop">
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="callBackShop" id="callLaterShop" value="callLater">
-                                                <label class="form-check-label" for="callLaterShop" id="sq6o2Label" lang="mr">खाली झाल्यनंतर मी तुम्हाला फोन करतो</label>
-                                            </div>
-                                        </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion5" id="drainageNo" value="no">
+                                        <label class="form-check-label" for="drainageNo" id="q5o2Label" lang="mr">नाही आहे</label>
                                     </div>
                                 </div>
+                            </div>
 
-                                <!-- Question 3 -->
-                                <div id="mainQuestion3" class="mb-3">
-                                    <label class="form-label" id="q3Label" lang="mr">३. शॉप मध्ये आवश्यक बदल करण्याचे काम पूर्ण झाले आहे का?</label>
-                                    <div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="mainQuestion3" id="changesCompleteYes" value="yes">
-                                            <label class="form-check-label" for="changesCompleteYes" id="q3o1Label" lang="mr">हो पूर्ण झाले आहे</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="mainQuestion3" id="changesCompleteNo" value="no">
-                                            <label class="form-check-label" for="changesCompleteNo" id="q3o2Label" lang="mr">नाही पूर्ण झाले नाही</label>
-                                        </div>
+                            <!-- Sub-Questions for Question 5 (Yes) -->
+                            <div class="question hidden" id="subQuestions5Yes">
+                                <div class="mb-3">
+                                    <label class="form-label" id="drainagePhotoLabel" lang="mr">शॉप मध्ये drinage चालू असल्याचा फोटो पाठवा</label>
+                                    <input type="file" class="form-control" id="drainagePhoto" name="drainagePhoto" accept="image/*">
+                                </div>
+                            </div>
+
+                            <!-- Sub-Questions for Question 5 (No) -->
+                            <div class="question hidden" id="subQuestions5No">
+                                <div class="mb-3">
+                                    <label class="form-label" id="sq8Label" lang="mr">५.१ कोण घेऊन देणार आहे?</label>
+                                    <select class="form-select" id="sq8Select" name="drainageProvider">
+                                        <option value="owner" id="sq8o1">शॉप owner</option>
+                                        <option value="franchisee" id="sq8o2">frenchisee धारक</option>
+                                        <option value="other" id="sq8o3">इतर</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Question 6 -->
+                            <div class="question hidden" id="question6">
+                                <label class="form-label" id="q6Label" lang="mr">६. शॉप मध्ये water कॅन्नेक्टी आहे का?</label>
+                                <div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion6" id="waterYes" value="yes">
+                                        <label class="form-check-label" for="waterYes" id="q6o1Label" lang="mr">हो आहे</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion6" id="waterNo" value="no">
+                                        <label class="form-check-label" for="waterNo" id="q6o2Label" lang="mr">नाही आहे</label>
                                     </div>
                                 </div>
+                            </div>
 
-                                <!-- Question 4 -->
-                                <div id="mainQuestion4" class="mb-3">
-                                    <label class="form-label" id="q4Label" lang="mr">४. शॉप मध्ये electrical supply आहे का?</label>
-                                    <div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="mainQuestion4" id="electricalSupplyYes" value="yes">
-                                            <label class="form-check-label" for="electricalSupplyYes" id="q4o1Label" lang="mr">हो आहे</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="mainQuestion4" id="electricalSupplyNo" value="no">
-                                            <label class="form-check-label" for="electricalSupplyNo" id="q4o2Label" lang="mr">नाही आहे</label>
-                                        </div>
+                            <!-- Sub-Questions for Question 6 (Yes) -->
+                            <div class="question hidden" id="subQuestions6Yes">
+                                <div class="mb-3">
+                                    <label class="form-label" id="waterVideoLabel" lang="mr">शॉप मध्ये नळाला पाणी चालू असल्याचा video पाठवा</label>
+                                    <input type="file" class="form-control" id="waterVideo" name="waterVideo" accept="video/*">
+                                </div>
+                            </div>
+
+                            <!-- Sub-Questions for Question 6 (No) -->
+                            <div class="question hidden" id="subQuestions6No">
+                                <div class="mb-3">
+                                    <label class="form-label" id="sq9Label" lang="mr">६.१ कोण घेऊन देणार आहे?</label>
+                                    <select class="form-select" id="sq9Select" name="waterProvider">
+                                        <option value="owner" id="sq9o1">शॉप owner</option>
+                                        <option value="franchisee" id="sq9o2">frenchisee धारक</option>
+                                        <option value="other" id="sq9o3">इतर</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Question 7 -->
+                            <div class="question hidden" id="question7">
+                                <label class="form-label" id="q7Label" lang="mr">७. शॉप मध्ये Earthing कॅन्नेक्टी आहे का?</label>
+                                <div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion7" id="earthingYes" value="yes">
+                                        <label class="form-check-label" for="earthingYes" id="q7o1Label" lang="mr">हो आहे</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="mainQuestion7" id="earthingNo" value="no">
+                                        <label class="form-check-label" for="earthingNo" id="q7o2Label" lang="mr">नाही आहे</label>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div id="electricalSupplyYesQuestions" class="hidden">
-                                    <div class="mb-3">
-                                        <label class="form-label" id="lightPhotoLabel" lang="mr">४.१ शॉप मध्ये light चालू असल्याचा फोटो पाठवा</label>
-                                        <input type="file" class="form-control" id="lightPhoto" accept="image/*">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" id="mcbBoxLabel" lang="mr">४.२ MCB Box चा फोटो पाठवा</label>
-                                        <input type="file" class="form-control" id="mcbBoxPhoto" accept="image/*">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" id="meterBoxLabel" lang="mr">४.३ Meter Box चा फोटो पाठवा</label>
-                                        <input type="file" class="form-control" id="meterBoxPhoto" accept="image/*">
-                                    </div>
+                            <!-- Sub-Questions for Question 7 (Yes) -->
+                            <div class="question hidden" id="subQuestions7Yes">
+                                <div class="mb-3">
+                                    <label class="form-label" id="earthingPhotoLabel" lang="mr">फोटो पाठवा</label>
+                                    <input type="file" class="form-control" id="earthingPhoto" name="earthingPhoto" accept="image/*">
                                 </div>
+                            </div>
 
-                                <div id="electricalSupplyNoQuestions" class="hidden">
-                                    <div class="mb-3">
-                                        <label class="form-label" id="sq7Label" lang="mr">४.१ कोण घेऊन देणार आहे?</label>
-                                        <select class="form-select" id="sq7Select">
-                                            <option value="owner" id="sq7o1">शॉप owner</option>
-                                            <option value="franchisee" id="sq7o2">frenchisee धारक</option>
-                                            <option value="other" id="sq7o3">इतर</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- Question 5 -->
-                                <div id="mainQuestion5" class="mb-3">
-                                    <label class="form-label" id="q5Label" lang="mr">५. शॉप मध्ये drinage कॅन्नेक्टी आहे का?</label>
-                                    <div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="mainQuestion5" id="drainageYes" value="yes">
-                                            <label class="form-check-label" for="drainageYes" id="q5o1Label" lang="mr">हो आहे</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="mainQuestion5" id="drainageNo" value="no">
-                                            <label class="form-check-label" for="drainageNo" id="q5o2Label" lang="mr">नाही आहे</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="drainageYesQuestions" class="hidden">
-                                    <div class="mb-3">
-                                        <label class="form-label" id="drainagePhotoLabel" lang="mr">५.१ शॉप मध्ये drinage चालू असल्याचा फोटो पाठवा</label>
-                                        <input type="file" class="form-control" id="drainagePhoto" accept="image/*">
-                                    </div>
-                                </div>
-
-                                <div id="drainageNoQuestions" class="hidden">
-                                    <div class="mb-3">
-                                        <label class="form-label" id="sq8Label" lang="mr">५.१ कोण घेऊन देणार आहे?</label>
-                                        <select class="form-select" id="sq8Select">
-                                            <option value="owner" id="sq8o1">शॉप owner</option>
-                                            <option value="franchisee" id="sq8o2">frenchisee धारक</option>
-                                            <option value="other" id="sq8o3">इतर</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- Question 6 -->
-                                <div id="mainQuestion6" class="mb-3">
-                                    <label class="form-label" id="q6Label" lang="mr">६. शॉप मध्ये water कॅन्नेक्टी आहे का?</label>
-                                    <div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="mainQuestion6" id="waterYes" value="yes">
-                                            <label class="form-check-label" for="waterYes" id="q6o1Label" lang="mr">हो आहे</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="mainQuestion6" id="waterNo" value="no">
-                                            <label class="form-check-label" for="waterNo" id="q6o2Label" lang="mr">नाही आहे</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="waterYesQuestions" class="hidden">
-                                    <div class="mb-3">
-                                        <label class="form-label" id="waterPhotoLabel" lang="mr">६.१ फोटो पाठवा</label>
-                                        <input type="file" class="form-control" id="waterPhoto" accept="image/*">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" id="waterVideoLabel" lang="mr">६.२ शॉप मध्ये नळाला पाणी चालू असल्याचा video पाठवा</label>
-                                        <input type="file" class="form-control" id="waterVideo" accept="video/*">
-                                    </div>
-                                </div>
-
-                                <div id="waterNoQuestions" class="hidden">
-                                    <div class="mb-3">
-                                        <label class="form-label" id="sq9Label" lang="mr">६.१ कोण घेऊन देणार आहे?</label>
-                                        <select class="form-select" id="sq9Select">
-                                            <option value="owner" id="sq9o1">शॉप owner</option>
-                                            <option value="franchisee" id="sq9o2">frenchisee धारक</option>
-                                            <option value="other" id="sq9o3">इतर</option>
-                                        </select>
-                                    </div>
+                            <!-- Sub-Questions for Question 7 (No) -->
+                            <div class="question hidden" id="subQuestions7No">
+                                <div class="mb-3">
+                                    <label class="form-label" id="sq10Label" lang="mr">७.१ कोण घेऊन देणार आहे?</label>
+                                    <select class="form-select" id="sq10Select" name="earthingProvider">
+                                        <option value="owner" id="sq10o1">शॉप owner</option>
+                                        <option value="franchisee" id="sq10o2">frenchisee धारक</option>
+                                        <option value="other" id="sq10o3">इतर</option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="d-grid gap-2 mt-4">
-                                <button type="button" class="btn btn-secondary shadow" id="sendBtn">Send</button>
+                                <button type="button" class="btn btn-secondary shadow" id="backBtn">Back</button>
                                 <button type="submit" class="btn btn-primary shadow" id="submitBtn">सबमिट करा</button>
                             </div>
                         </form>
